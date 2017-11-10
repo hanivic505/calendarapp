@@ -1,6 +1,6 @@
 module.exports = {
   template: require('./calendar.html'),
-  controller: function ($log) {
+  controller: function () {
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     this.isToday = function (d) {
@@ -40,7 +40,6 @@ module.exports = {
         let tmp = tempDate.toDateString();
         this.days.push(new Date(new Date(tmp).setDate(new Date(tmp).getDate() + i)));
       }
-      $log.log(this.days);
     };
     this.setDate(today);
   }

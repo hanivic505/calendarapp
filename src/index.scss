@@ -3,8 +3,9 @@ body {
   padding-top: 60px;
 }
 
-$main-color:#345;
-$secondry-color:#543;
+$main-color:#369;
+$secondry-color:#963;
+$invert-color:#396;
 $main-grey:#777;
 .day {
   width: 14.2%;
@@ -12,7 +13,7 @@ $main-grey:#777;
   height: 8em;
   padding: .1em;
   &:hover {
-    background: lighten($color: $secondry-color, $amount: 5);
+    background: lighten($color: $invert-color, $amount: 5);
     color: #fff;
     li {
       background: lighten($color: $main-color, $amount: 10);
@@ -25,11 +26,32 @@ $main-grey:#777;
       background: lighten($color: $main-color, $amount: 1);
     }
   }
+  &.disabled {
+    background: lighten($color: $main-grey, $amount: 10);
+    color: lighten($color: $main-grey, $amount: 3);
+    span {
+      background: lighten($color: $main-grey, $amount: 20);
+      color: darken($color: $main-grey, $amount: 10);
+    }
+    li {
+      background: lighten($color: $main-grey, $amount: 7);
+      color: lighten($color: $main-grey, $amount: 3);
+    }
+  }
   &.header {
     height: auto;
     background: darken($color: $main-grey, $amount: 10);
     color: #fff;
     text-align: center;
+  }
+  span {
+    padding: 2px 6px;
+    border-radius: 4px;
+    min-width: 1.8em;
+    display: inline-block;
+    text-align: center;
+    background: lighten($color: $main-color, $amount: 50);
+    color: lighten($color: $main-color, $amount: 10);
   }
   ul {
     overflow: auto;
@@ -37,13 +59,17 @@ $main-grey:#777;
     margin: 0;
     padding: 0;
     li {
-      background: $main-color;
+      background: $invert-color;
       color: #fff;
       list-style: none;
       padding: .05em .4em;
       margin: .1em .2em;
       border-radius: 4px;
       line-height: 1.2em;
+      cursor: pointer;
+      &:hover {
+        background: lighten($color: $main-color, $amount: 5);
+      }
     }
   }
 }

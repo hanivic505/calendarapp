@@ -20,6 +20,12 @@
     <div class="day header">Saturday</div>
   </div>
   <div class="row">
-    <div class="day" ng-class="{'today':$ctrl.isToday(day)}" ng-repeat="day in $ctrl.days">{{day.getDate()}}</div>
+    <div class="day" ng-class="{'today':$ctrl.isToday(day),'disabled':$ctrl.isDisabled(day)}" ng-repeat="day in $ctrl.days"><span>{{day.getDate()}}</span>
+    <ul>
+      <li>New event</li>
+      <li>New event</li>
+      <li>New event</li>
+    </ul>
+    </div>
   </div>
 </div>

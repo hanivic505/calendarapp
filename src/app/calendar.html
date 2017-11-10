@@ -1,0 +1,25 @@
+<h1>{{ $ctrl.selectedMonth.day+ ' ' + $ctrl.selectedMonth.monthName + ', ' + $ctrl.selectedMonth.year }}
+  <div class="pull-right">
+    <button class="btn btn-sm btn-default" ng-click="$ctrl.prevMonth()">
+      <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    </button>
+    <button class="btn btn-sm btn-default" ng-click="$ctrl.setToday()">Today</button>
+    <button class="btn btn-sm btn-default" ng-click="$ctrl.nextMonth()">
+      <i class="fa fa-arrow-right" aria-hidden="true"></i>
+    </button>
+  </div>
+</h1>
+<div class="col-md-12">
+  <div class="row">
+    <div class="day header">Sunday</div>
+    <div class="day header">Monday</div>
+    <div class="day header">Tuesday</div>
+    <div class="day header">Wednesday</div>
+    <div class="day header">Thursday</div>
+    <div class="day header">Friday</div>
+    <div class="day header">Saturday</div>
+  </div>
+  <div class="row">
+    <div class="day" ng-class="{'today':$ctrl.isToday(day)}" ng-repeat="day in $ctrl.days">{{day.getDate()}}</div>
+  </div>
+</div>

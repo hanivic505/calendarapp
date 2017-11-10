@@ -1,0 +1,49 @@
+body {
+  background-color: lightgrey;
+  padding-top: 60px;
+}
+
+$main-color:#345;
+$secondry-color:#543;
+$main-grey:#777;
+.day {
+  width: 14.2%;
+  border: solid 1px $main-grey;
+  height: 8em;
+  padding: .1em;
+  &:hover {
+    background: lighten($color: $secondry-color, $amount: 5);
+    color: #fff;
+    li {
+      background: lighten($color: $main-color, $amount: 10);
+    }
+  }
+  &.today {
+    background: darken($color: $main-color, $amount: 10);
+    color: #fff;
+    &:hover {
+      background: lighten($color: $main-color, $amount: 1);
+    }
+  }
+  &.header {
+    height: auto;
+    background: darken($color: $main-grey, $amount: 10);
+    color: #fff;
+    text-align: center;
+  }
+  ul {
+    overflow: auto;
+    height: 80%;
+    margin: 0;
+    padding: 0;
+    li {
+      background: $main-color;
+      color: #fff;
+      list-style: none;
+      padding: .05em .4em;
+      margin: .1em .2em;
+      border-radius: 4px;
+      line-height: 1.2em;
+    }
+  }
+}

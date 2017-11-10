@@ -44,7 +44,7 @@ module.exports = {
       for (let i = tempDate.getDay(); i > 0; i--) {
         let tmp = new Date(tempDate.toDateString());
         this.days.push(new Date(tmp.setDate(tmp.getDate() - i)));
-      }
+      } 
       do {
         let tmp = new Date(tempDate.toDateString());
         this.days.push(tmp);

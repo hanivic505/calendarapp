@@ -74,6 +74,9 @@ module.exports = {
         resolve: {
           events: function () {
             return _this.getEvents(day);
+          },
+          day: function () {
+            return day;
           }
         }
       });
@@ -83,6 +86,9 @@ module.exports = {
       }, function () {
         $log.info('Modal dismissed at: ' + new Date());
       });
+    };
+    this.dynamicPopover = {
+      templateUrl: 'myPopoverTemplate.html'
     };
   }
 };

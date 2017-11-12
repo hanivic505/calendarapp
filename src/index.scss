@@ -36,7 +36,7 @@ body {
       background: lighten($color: $main-grey, $amount: 20);
       color: darken($color: $main-grey, $amount: 10);
     }
-    li {
+    .events-list event {
       background: lighten($color: $main-grey, $amount: 7);
       color: lighten($color: $main-grey, $amount: 3);
     }
@@ -64,35 +64,45 @@ body {
     padding: 2px 4px;
     text-align: center;
     min-width: 2.6em;
+    cursor: pointer;
+    &:hover {
+      background: rgba($color: $secondry-color, $alpha: 1);
+    }
   }
-  ul {
+}
+
+.events-list {
+  .day & {
     overflow: auto;
-    height: 80%;
-    margin: 0;
-    padding: 0;
-    #{$event} {
-      background: lighten($color:$third-color, $amount:30);
-      color: $third-color;
-      list-style: none;
-      padding: .05em .4em;
-      margin: .1em .2em;
-      border-radius: 4px;
-      line-height: 1.2em;
-      cursor: pointer;
+  }
+  height: 80%;
+  margin: 0;
+  padding: 0;
+  event {
+    background: lighten($color:$third-color, $amount:30);
+    color: $third-color;
+    list-style: none;
+    padding: .25em .4em;
+    margin: .1em .2em;
+    border-radius: 4px;
+    line-height: 1.2em;
+    cursor: pointer;
+    display: block;
+    .day & {
       display: none;
-      header {
-        font-weight: bold;
-      }
-      footer {
-        font-size: 1.4em;
-      }
-      &:hover {
-        background: lighten($color: $main-color, $amount: 10);
-        color: #fff;
-      }
-      &:first-child {
-        display: block;
-      }
+    }
+    header {
+      font-weight: bold;
+    }
+    footer {
+      font-size: 1.4em;
+    }
+    &:hover {
+      background: lighten($color: $main-color, $amount: 10);
+      color: #fff;
+    }
+    &:first-child {
+      display: block;
     }
   }
 }

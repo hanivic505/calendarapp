@@ -3,6 +3,7 @@ var angular = require('angular');
 var calendar = require('./app/calendar');
 require('angular-ui-router');
 var modal = require('angular1-ui-bootstrap4/src/modal');
+var popover = require('angular1-ui-bootstrap4/src/popover');
 var routesConfig = require('./routes');
 
 require('./index.scss');
@@ -11,7 +12,7 @@ var app = 'app';
 module.exports = app;
 
 angular
-  .module(app, ['ui.router', modal])
+  .module(app, ['ui.router', modal, popover])
   .config(routesConfig)
   .component('app', calendar)
   .run(function (LocalStorageService) {
@@ -33,9 +34,10 @@ angular
       date: new Date().setDate(32)
     }]);
   })
-  .controller('ModalInstanceController', function ($uibModalInstance, events) {
+  .controller('ModalInstanceController', function ($uibModalInstance, day, events) {
     var vm = this;
     vm.events = events;
+    vm.day = day;
 
     vm.ok = function () {
       $uibModalInstance.close('closed');
@@ -55,8 +57,7 @@ angular
     controller: function () {
       var vm = this;
 
-      vm.$onInit = function () {
-      };
+      vm.$onInit = function () {};
 
       vm.ok = function () {
         vm.close({
@@ -73,3 +74,4 @@ angular
   });
 
 require('./app/services');
+require('./app/components');

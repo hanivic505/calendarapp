@@ -1,4 +1,7 @@
 <h1>{{ $ctrl.selectedMonth.monthName + ', ' + $ctrl.selectedMonth.year }}
+  <button popover-placement="bottom-left" uib-popover-template="$ctrl.dynamicPopover.templateUrl" 
+    type="button" class="btn btn-default btn-sm">
+    <i class="fa fa-plus-circle"></i> New Event</button>
   <div class="pull-right">
     <button class="btn btn-sm btn-default" ng-click="$ctrl.prevMonth()">
       <i class="fa fa-arrow-left" aria-hidden="true"></i>
@@ -16,32 +19,52 @@
   <div class="row">
     <div class="day" ng-class="{'today':$ctrl.isToday(day),'disabled':$ctrl.isDisabled(day)}" ng-repeat="day in $ctrl.days">
       <header>{{day.getDate()}}</header>
-      <ul>
-        <li ng-repeat="event in eventsList=$ctrl.getEvents(day)">
-          <header>{{event.title}}</header>
-          <p>{{event.description}}</p>
-          <footer>{{event.date | date:'hh:mm'}}</footer>
-        </li>
-      </ul>
+      <div class="events-list">
+        <event event-info="event" ng-repeat="event in eventsList=$ctrl.getEvents(day)"></event>
+      </div>
       <footer ng-if="eventsList.length>1" ng-click="$ctrl.showAllEvents(day)">+{{eventsList.length-1}}</footer>
     </div>
   </div>
 </div>
 <script type="text/ng-template" id="myModalContent.html">
   <div class="modal-header">
-    <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
+    <h3 class="modal-title" id="modal-title">{{$ctrl.day | date: 'MMMM dd, yyyy'}}</h3>
   </div>
   <div class="modal-body" id="modal-body">
-    <ul>
-      <li ng-repeat="event in $ctrl.events">
-        <header>{{event.title}}</header>
-        <p>{{event.description}}</p>
-        <footer>{{event.date | date:'hh:mm'}}</footer>
-      </li>
-    </ul>
+    <div class="events-list">
+      <event event-info="event" ng-repeat="event in $ctrl.events">
+      </event>
+    </div>
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
     <button class="btn btn-warning" ng-hide="true" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+  </div>
+</script>
+<script type="text/ng-template" id="myPopoverTemplate.html">
+  <div class="popover" role="tooltip">
+    <div class="arrow"></div>
+    <h3 class="popover-header">Add Event</h3>
+    <div class="popover-body">
+      <div class="form-group">
+        <label>Title:</label>
+        <input type="text" ng-model="$ctrl.event.title" class="form-control form-control-sm" />
+      </div>
+      <div class="form-group">
+        <label>Description:</label>
+        <textarea rows="" cols="" ng-model="$ctrl.event.description" class="form-control form-control-sm"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Date:</label>
+        <input type="date" ng-model="$ctrl.event.date" class="form-control form-control-sm" />
+      </div>
+      <div class="form-group">
+        <label>Time:</label>
+        <input type="time" ng-model="$ctrl.event.date" class="form-control form-control-sm" />
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-sm" ng-click="$ctrl.addEvent($ctrl.event)">Save</button>
+      </div>
+    </div>
   </div>
 </script>

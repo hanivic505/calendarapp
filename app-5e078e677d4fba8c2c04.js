@@ -1,26 +1,60 @@
 webpackJsonp([0],[
 /* 0 */,
 /* 1 */,
-/* 2 */,
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(19);
-module.exports = __webpack_require__(9);
+
+var MODULE_NAME = 'ui.bootstrap.module.position';
+
+angular.module(MODULE_NAME, ['ui.bootstrap.position']);
+
+module.exports = MODULE_NAME;
 
 
 /***/ }),
-/* 4 */
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(20);
+
+var MODULE_NAME = 'ui.bootstrap.module.stackedMap';
+
+angular.module(MODULE_NAME, ['ui.bootstrap.stackedMap']);
+
+module.exports = MODULE_NAME;
+
+
+/***/ }),
+/* 4 */,
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(31);
+module.exports = __webpack_require__(13);
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(32);
+module.exports = __webpack_require__(17);
+
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 5 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = {
-  template: __webpack_require__(20),
+  template: __webpack_require__(33),
   controller: function ($log, $uibModal, LocalStorageService) {
     var _this = this;
     let _initData = function () {
@@ -95,6 +129,9 @@ module.exports = {
         resolve: {
           events: function () {
             return _this.getEvents(day);
+          },
+          day: function () {
+            return day;
           }
         }
       });
@@ -105,21 +142,33 @@ module.exports = {
         $log.info('Modal dismissed at: ' + new Date());
       });
     };
+    this.dynamicPopover = {
+      templateUrl: 'myPopoverTemplate.html'
+    };
   }
 };
 
 
 /***/ }),
-/* 6 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var angular = __webpack_require__(0);
 angular.module('app')
-  .service('LocalStorageService', __webpack_require__(21));
+    .component('event', __webpack_require__(35));
 
 
 /***/ }),
-/* 7 */
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var angular = __webpack_require__(0);
+angular.module('app')
+  .service('LocalStorageService', __webpack_require__(36));
+
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports) {
 
 
@@ -139,15 +188,15 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
 
 
 /***/ }),
-/* 8 */,
-/* 9 */
+/* 12 */,
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(11);
-__webpack_require__(13);
 __webpack_require__(15);
-__webpack_require__(17);
-__webpack_require__(10);
+__webpack_require__(2);
+__webpack_require__(3);
+__webpack_require__(23);
+__webpack_require__(14);
 
 var MODULE_NAME = 'ui.bootstrap.module.modal';
 
@@ -157,7 +206,7 @@ module.exports = MODULE_NAME;
 
 
 /***/ }),
-/* 10 */
+/* 14 */
 /***/ (function(module, exports) {
 
 angular.module('ui.bootstrap.modal', ['ui.bootstrap.multiMap', 'ui.bootstrap.stackedMap', 'ui.bootstrap.position'])
@@ -993,14 +1042,14 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.multiMap', 'ui.bootstrap.sta
 
 
 /***/ }),
-/* 11 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(12);
+__webpack_require__(16);
 
 
 /***/ }),
-/* 12 */
+/* 16 */
 /***/ (function(module, exports) {
 
 angular.module('ui.bootstrap.multiMap', [])
@@ -1061,20 +1110,76 @@ angular.module('ui.bootstrap.multiMap', [])
 
 
 /***/ }),
-/* 13 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(14);
+__webpack_require__(21);
+__webpack_require__(26);
+__webpack_require__(24);
+__webpack_require__(25);
+__webpack_require__(18);
 
-var MODULE_NAME = 'ui.bootstrap.module.position';
+var MODULE_NAME = 'ui.bootstrap.module.popover';
 
-angular.module(MODULE_NAME, ['ui.bootstrap.position']);
+angular.module(MODULE_NAME, ['ui.bootstrap.popover', 'uib/template/popover/popover.html', 'uib/template/popover/popover-html.html', 'uib/template/popover/popover-template.html']);
 
 module.exports = MODULE_NAME;
 
 
 /***/ }),
-/* 14 */
+/* 18 */
+/***/ (function(module, exports) {
+
+/**
+ * The following features are still outstanding: popup delay, animation as a
+ * function, placement as a function, inside, support for more triggers than
+ * just mouse enter/leave, and selector delegatation.
+ */
+angular.module('ui.bootstrap.popover', ['ui.bootstrap.tooltip'])
+
+.directive('uibPopoverTemplatePopup', function() {
+  return {
+    restrict: 'A',
+    scope: { uibTitle: '@', contentExp: '&', originScope: '&' },
+    templateUrl: 'uib/template/popover/popover-template.html'
+  };
+})
+
+.directive('uibPopoverTemplate', ['$uibTooltip', function($uibTooltip) {
+  return $uibTooltip('uibPopoverTemplate', 'popover', 'click', {
+    useContentExp: true
+  });
+}])
+
+.directive('uibPopoverHtmlPopup', function() {
+  return {
+    restrict: 'A',
+    scope: { contentExp: '&', uibTitle: '@' },
+    templateUrl: 'uib/template/popover/popover-html.html'
+  };
+})
+
+.directive('uibPopoverHtml', ['$uibTooltip', function($uibTooltip) {
+  return $uibTooltip('uibPopoverHtml', 'popover', 'click', {
+    useContentExp: true
+  });
+}])
+
+.directive('uibPopoverPopup', function() {
+  return {
+    restrict: 'A',
+    scope: { uibTitle: '@', content: '@' },
+    templateUrl: 'uib/template/popover/popover.html'
+  };
+})
+
+.directive('uibPopover', ['$uibTooltip', function($uibTooltip) {
+  return $uibTooltip('uibPopover', 'popover', 'click');
+}]);
+
+
+/***/ }),
+/* 19 */
 /***/ (function(module, exports) {
 
 angular.module('ui.bootstrap.position', [])
@@ -1700,20 +1805,7 @@ angular.module('ui.bootstrap.position', [])
 
 
 /***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(16);
-
-var MODULE_NAME = 'ui.bootstrap.module.stackedMap';
-
-angular.module(MODULE_NAME, ['ui.bootstrap.stackedMap']);
-
-module.exports = MODULE_NAME;
-
-
-/***/ }),
-/* 16 */
+/* 20 */
 /***/ (function(module, exports) {
 
 angular.module('ui.bootstrap.stackedMap', [])
@@ -1772,7 +1864,754 @@ angular.module('ui.bootstrap.stackedMap', [])
   });
 
 /***/ }),
-/* 17 */
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(2);
+__webpack_require__(3);
+__webpack_require__(28);
+__webpack_require__(27);
+__webpack_require__(29);
+__webpack_require__(22);
+
+var MODULE_NAME = 'ui.bootstrap.module.tooltip';
+
+angular.module(MODULE_NAME, ['ui.bootstrap.tooltip', 'uib/template/tooltip/tooltip-popup.html', 'uib/template/tooltip/tooltip-html-popup.html', 'uib/template/tooltip/tooltip-template-popup.html']);
+
+module.exports = MODULE_NAME;
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports) {
+
+/**
+ * The following features are still outstanding: animation as a
+ * function, placement as a function, inside, support for more triggers than
+ * just mouse enter/leave, html tooltips, and selector delegation.
+ */
+angular.module('ui.bootstrap.tooltip', ['ui.bootstrap.position', 'ui.bootstrap.stackedMap'])
+
+/**
+ * The $tooltip service creates tooltip- and popover-like directives as well as
+ * houses global options for them.
+ */
+.provider('$uibTooltip', function() {
+  // The default options tooltip and popover.
+  var defaultOptions = {
+    placement: 'top',
+    placementClassPrefix: '',
+    animation: true,
+    popupDelay: 0,
+    popupCloseDelay: 0,
+    useContentExp: false
+  };
+
+  // Default hide triggers for each show trigger
+  var triggerMap = {
+    'mouseenter': 'mouseleave',
+    'click': 'click',
+    'outsideClick': 'outsideClick',
+    'focus': 'blur',
+    'none': ''
+  };
+
+  // The options specified to the provider globally.
+  var globalOptions = {};
+
+  /**
+   * `options({})` allows global configuration of all tooltips in the
+   * application.
+   *
+   *   var app = angular.module( 'App', ['ui.bootstrap.tooltip'], function( $tooltipProvider ) {
+   *     // place tooltips left instead of top by default
+   *     $tooltipProvider.options( { placement: 'left' } );
+   *   });
+   */
+	this.options = function(value) {
+		angular.extend(globalOptions, value);
+	};
+
+  /**
+   * This allows you to extend the set of trigger mappings available. E.g.:
+   *
+   *   $tooltipProvider.setTriggers( { 'openTrigger': 'closeTrigger' } );
+   */
+  this.setTriggers = function setTriggers(triggers) {
+    angular.extend(triggerMap, triggers);
+  };
+
+  /**
+   * This is a helper function for translating camel-case to snake_case.
+   */
+  function snake_case(name) {
+    var regexp = /[A-Z]/g;
+    var separator = '-';
+    return name.replace(regexp, function(letter, pos) {
+      return (pos ? separator : '') + letter.toLowerCase();
+    });
+  }
+
+  /**
+   * Returns the actual instance of the $tooltip service.
+   * TODO support multiple triggers
+   */
+  this.$get = ['$window', '$compile', '$timeout', '$document', '$uibPosition', '$interpolate', '$rootScope', '$parse', '$$stackedMap', function($window, $compile, $timeout, $document, $position, $interpolate, $rootScope, $parse, $$stackedMap) {
+    var openedTooltips = $$stackedMap.createNew();
+    $document.on('keyup', keypressListener);
+
+    $rootScope.$on('$destroy', function() {
+      $document.off('keyup', keypressListener);
+    });
+
+    function keypressListener(e) {
+      if (e.which === 27) {
+        var last = openedTooltips.top();
+        if (last) {
+          last.value.close();
+          last = null;
+        }
+      }
+    }
+
+    return function $tooltip(ttType, prefix, defaultTriggerShow, options) {
+      options = angular.extend({}, defaultOptions, globalOptions, options);
+
+      /**
+       * Returns an object of show and hide triggers.
+       *
+       * If a trigger is supplied,
+       * it is used to show the tooltip; otherwise, it will use the `trigger`
+       * option passed to the `$tooltipProvider.options` method; else it will
+       * default to the trigger supplied to this directive factory.
+       *
+       * The hide trigger is based on the show trigger. If the `trigger` option
+       * was passed to the `$tooltipProvider.options` method, it will use the
+       * mapped trigger from `triggerMap` or the passed trigger if the map is
+       * undefined; otherwise, it uses the `triggerMap` value of the show
+       * trigger; else it will just use the show trigger.
+       */
+      function getTriggers(trigger) {
+        var show = (trigger || options.trigger || defaultTriggerShow).split(' ');
+        var hide = show.map(function(trigger) {
+          return triggerMap[trigger] || trigger;
+        });
+        return {
+          show: show,
+          hide: hide
+        };
+      }
+
+      var directiveName = snake_case(ttType);
+
+      var startSym = $interpolate.startSymbol();
+      var endSym = $interpolate.endSymbol();
+      var template =
+        '<div '+ directiveName + '-popup ' +
+          'uib-title="' + startSym + 'title' + endSym + '" ' +
+          (options.useContentExp ?
+            'content-exp="contentExp()" ' :
+            'content="' + startSym + 'content' + endSym + '" ') +
+          'origin-scope="origScope" ' +
+          'class="uib-position-measure ' + prefix + '" ' +
+          'tooltip-animation-class="fade" ' +
+          'placement-prefix="' + prefix + '" ' +
+          'uib-tooltip-classes ' +
+          'ng-class="{ show: isOpen }" ' +
+          '>' +
+        '</div>';
+
+      return {
+        compile: function(tElem, tAttrs) {
+          var tooltipLinker = $compile(template);
+
+          return function link(scope, element, attrs, tooltipCtrl) {
+            var tooltip;
+            var tooltipLinkedScope;
+            var transitionTimeout;
+            var showTimeout;
+            var hideTimeout;
+            var positionTimeout;
+            var adjustmentTimeout;
+            var appendToBody = angular.isDefined(options.appendToBody) ? options.appendToBody : false;
+            var triggers = getTriggers(undefined);
+            var hasEnableExp = angular.isDefined(attrs[prefix + 'Enable']);
+            var ttScope = scope.$new(true);
+            var repositionScheduled = false;
+            var isOpenParse = angular.isDefined(attrs[prefix + 'IsOpen']) ? $parse(attrs[prefix + 'IsOpen']) : false;
+            var contentParse = options.useContentExp ? $parse(attrs[ttType]) : false;
+            var observers = [];
+            var lastPlacement;
+
+            var positionTooltip = function() {
+              // check if tooltip exists and is not empty
+              if (!tooltip || !tooltip.html()) { return; }
+
+              if (!positionTimeout) {
+                positionTimeout = $timeout(function() {
+                  var ttPosition = $position.positionElements(element, tooltip, ttScope.placement, appendToBody);
+                  var initialHeight = angular.isDefined(tooltip.offsetHeight) ? tooltip.offsetHeight : tooltip.prop('offsetHeight');
+                  var elementPos = appendToBody ? $position.offset(element) : $position.position(element);
+                  tooltip.css({ top: ttPosition.top + 'px', left: ttPosition.left + 'px' });
+                  var placementClasses = ttPosition.placement.split('-');
+
+                  if (!tooltip.hasClass(placementClasses[0])) {
+                    tooltip.removeClass(lastPlacement.split('-')[0]);
+                    tooltip.addClass(placementClasses[0]);
+                  }
+
+                  if (!tooltip.hasClass(options.placementClassPrefix + ttPosition.placement)) {
+                    tooltip.removeClass(options.placementClassPrefix + lastPlacement);
+                    tooltip.addClass(options.placementClassPrefix + ttPosition.placement);
+                  }
+
+                  adjustmentTimeout = $timeout(function() {
+                    var currentHeight = angular.isDefined(tooltip.offsetHeight) ? tooltip.offsetHeight : tooltip.prop('offsetHeight');
+                    var adjustment = $position.adjustTop(placementClasses, elementPos, initialHeight, currentHeight);
+                    if (adjustment) {
+                      tooltip.css(adjustment);
+                    }
+                    adjustmentTimeout = null;
+                  }, 0, false);
+
+                  // first time through tt element will have the
+                  // uib-position-measure class or if the placement
+                  // has changed we need to position the arrow.
+                  if (tooltip.hasClass('uib-position-measure')) {
+                    $position.positionArrow(tooltip, ttPosition.placement);
+                    tooltip.removeClass('uib-position-measure');
+                  } else if (lastPlacement !== ttPosition.placement) {
+                    $position.positionArrow(tooltip, ttPosition.placement);
+                  }
+                  lastPlacement = ttPosition.placement;
+
+                  positionTimeout = null;
+                }, 0, false);
+              }
+            };
+
+            // Set up the correct scope to allow transclusion later
+            ttScope.origScope = scope;
+
+            // By default, the tooltip is not open.
+            // TODO add ability to start tooltip opened
+            ttScope.isOpen = false;
+
+            function toggleTooltipBind() {
+              if (!ttScope.isOpen) {
+                showTooltipBind();
+              } else {
+                hideTooltipBind();
+              }
+            }
+
+            // Show the tooltip with delay if specified, otherwise show it immediately
+            function showTooltipBind() {
+              if (hasEnableExp && !scope.$eval(attrs[prefix + 'Enable'])) {
+                return;
+              }
+
+              cancelHide();
+              prepareTooltip();
+
+              if (ttScope.popupDelay) {
+                // Do nothing if the tooltip was already scheduled to pop-up.
+                // This happens if show is triggered multiple times before any hide is triggered.
+                if (!showTimeout) {
+                  showTimeout = $timeout(show, ttScope.popupDelay, false);
+                }
+              } else {
+                show();
+              }
+            }
+
+            function hideTooltipBind() {
+              cancelShow();
+
+              if (ttScope.popupCloseDelay) {
+                if (!hideTimeout) {
+                  hideTimeout = $timeout(hide, ttScope.popupCloseDelay, false);
+                }
+              } else {
+                hide();
+              }
+            }
+
+            // Show the tooltip popup element.
+            function show() {
+              cancelShow();
+              cancelHide();
+
+              // Don't show empty tooltips.
+              if (!ttScope.content) {
+                return angular.noop;
+              }
+
+              createTooltip();
+
+              // And show the tooltip.
+              ttScope.$evalAsync(function() {
+                ttScope.isOpen = true;
+                assignIsOpen(true);
+                positionTooltip();
+              });
+            }
+
+            function cancelShow() {
+              if (showTimeout) {
+                $timeout.cancel(showTimeout);
+                showTimeout = null;
+              }
+
+              if (positionTimeout) {
+                $timeout.cancel(positionTimeout);
+                positionTimeout = null;
+              }
+            }
+
+            // Hide the tooltip popup element.
+            function hide() {
+              if (!ttScope) {
+                return;
+              }
+
+              // First things first: we don't show it anymore.
+              ttScope.$evalAsync(function() {
+                if (ttScope) {
+                  ttScope.isOpen = false;
+                  assignIsOpen(false);
+                  // And now we remove it from the DOM. However, if we have animation, we
+                  // need to wait for it to expire beforehand.
+                  // FIXME: this is a placeholder for a port of the transitions library.
+                  // The fade transition in TWBS is 150ms.
+                  if (ttScope.animation) {
+                    if (!transitionTimeout) {
+                      transitionTimeout = $timeout(removeTooltip, 150, false);
+                    }
+                  } else {
+                    removeTooltip();
+                  }
+                }
+              });
+            }
+
+            function cancelHide() {
+              if (hideTimeout) {
+                $timeout.cancel(hideTimeout);
+                hideTimeout = null;
+              }
+
+              if (transitionTimeout) {
+                $timeout.cancel(transitionTimeout);
+                transitionTimeout = null;
+              }
+            }
+
+            function createTooltip() {
+              // There can only be one tooltip element per directive shown at once.
+              if (tooltip) {
+                return;
+              }
+
+              tooltipLinkedScope = ttScope.$new();
+              tooltip = tooltipLinker(tooltipLinkedScope, function(tooltip) {
+                if (appendToBody) {
+                  $document.find('body').append(tooltip);
+                } else {
+                  element.after(tooltip);
+                }
+              });
+
+              openedTooltips.add(ttScope, {
+                close: hide
+              });
+
+              prepObservers();
+            }
+
+            function removeTooltip() {
+              cancelShow();
+              cancelHide();
+              unregisterObservers();
+
+              if (tooltip) {
+                tooltip.remove();
+                
+                tooltip = null;
+                if (adjustmentTimeout) {
+                  $timeout.cancel(adjustmentTimeout);
+                }
+              }
+
+              openedTooltips.remove(ttScope);
+              
+              if (tooltipLinkedScope) {
+                tooltipLinkedScope.$destroy();
+                tooltipLinkedScope = null;
+              }
+            }
+
+            /**
+             * Set the initial scope values. Once
+             * the tooltip is created, the observers
+             * will be added to keep things in sync.
+             */
+            function prepareTooltip() {
+              ttScope.title = attrs[prefix + 'Title'];
+              if (contentParse) {
+                ttScope.content = contentParse(scope);
+              } else {
+                ttScope.content = attrs[ttType];
+              }
+
+              ttScope.popupClass = attrs[prefix + 'Class'];
+              ttScope.placement = angular.isDefined(attrs[prefix + 'Placement']) ? attrs[prefix + 'Placement'] : options.placement;
+              var placement = $position.parsePlacement(ttScope.placement);
+              lastPlacement = placement[1] ? placement[0] + '-' + placement[1] : placement[0];
+
+              var delay = parseInt(attrs[prefix + 'PopupDelay'], 10);
+              var closeDelay = parseInt(attrs[prefix + 'PopupCloseDelay'], 10);
+              ttScope.popupDelay = !isNaN(delay) ? delay : options.popupDelay;
+              ttScope.popupCloseDelay = !isNaN(closeDelay) ? closeDelay : options.popupCloseDelay;
+            }
+
+            function assignIsOpen(isOpen) {
+              if (isOpenParse && angular.isFunction(isOpenParse.assign)) {
+                isOpenParse.assign(scope, isOpen);
+              }
+            }
+
+            ttScope.contentExp = function() {
+              return ttScope.content;
+            };
+
+            /**
+             * Observe the relevant attributes.
+             */
+            attrs.$observe('disabled', function(val) {
+              if (val) {
+                cancelShow();
+              }
+
+              if (val && ttScope.isOpen) {
+                hide();
+              }
+            });
+
+            if (isOpenParse) {
+              scope.$watch(isOpenParse, function(val) {
+                if (ttScope && !val === ttScope.isOpen) {
+                  toggleTooltipBind();
+                }
+              });
+            }
+
+            function prepObservers() {
+              observers.length = 0;
+
+              if (contentParse) {
+                observers.push(
+                  scope.$watch(contentParse, function(val) {
+                    ttScope.content = val;
+                    if (!val && ttScope.isOpen) {
+                      hide();
+                    }
+                  })
+                );
+
+                observers.push(
+                  tooltipLinkedScope.$watch(function() {
+                    if (!repositionScheduled) {
+                      repositionScheduled = true;
+                      tooltipLinkedScope.$$postDigest(function() {
+                        repositionScheduled = false;
+                        if (ttScope && ttScope.isOpen) {
+                          positionTooltip();
+                        }
+                      });
+                    }
+                  })
+                );
+              } else {
+                observers.push(
+                  attrs.$observe(ttType, function(val) {
+                    ttScope.content = val;
+                    if (!val && ttScope.isOpen) {
+                      hide();
+                    } else {
+                      positionTooltip();
+                    }
+                  })
+                );
+              }
+
+              observers.push(
+                attrs.$observe(prefix + 'Title', function(val) {
+                  ttScope.title = val;
+                  if (ttScope.isOpen) {
+                    positionTooltip();
+                  }
+                })
+              );
+
+              observers.push(
+                attrs.$observe(prefix + 'Placement', function(val) {
+                  ttScope.placement = val ? val : options.placement;
+                  if (ttScope.isOpen) {
+                    positionTooltip();
+                  }
+                })
+              );
+            }
+
+            function unregisterObservers() {
+              if (observers.length) {
+                angular.forEach(observers, function(observer) {
+                  observer();
+                });
+                observers.length = 0;
+              }
+            }
+
+            // hide tooltips/popovers for outsideClick trigger
+            function bodyHideTooltipBind(e) {
+              if (!ttScope || !ttScope.isOpen || !tooltip) {
+                return;
+              }
+              // make sure the tooltip/popover link or tool tooltip/popover itself were not clicked
+              if (!element[0].contains(e.target) && !tooltip[0].contains(e.target)) {
+                hideTooltipBind();
+              }
+            }
+
+            var unregisterTriggers = function() {
+              triggers.show.forEach(function(trigger) {
+                if (trigger === 'outsideClick') {
+                  element.off('click', toggleTooltipBind);
+                } else {
+                  element.off(trigger, showTooltipBind);
+                  element.off(trigger, toggleTooltipBind);
+                }
+              });
+              triggers.hide.forEach(function(trigger) {
+                if (trigger === 'outsideClick') {
+                  $document.off('click', bodyHideTooltipBind);
+                } else {
+                  element.off(trigger, hideTooltipBind);
+                }
+              });
+            };
+
+            function prepTriggers() {
+              var showTriggers = [], hideTriggers = [];
+              var val = scope.$eval(attrs[prefix + 'Trigger']);
+              unregisterTriggers();
+
+              if (angular.isObject(val)) {
+                Object.keys(val).forEach(function(key) {
+                  showTriggers.push(key);
+                  hideTriggers.push(val[key]);
+                });
+                triggers = {
+                  show: showTriggers,
+                  hide: hideTriggers
+                };
+              } else {
+                triggers = getTriggers(val);
+              }
+
+              if (triggers.show !== 'none') {
+                triggers.show.forEach(function(trigger, idx) {
+                  if (trigger === 'outsideClick') {
+                    element.on('click', toggleTooltipBind);
+                    $document.on('click', bodyHideTooltipBind);
+                  } else if (trigger === triggers.hide[idx]) {
+                    element.on(trigger, toggleTooltipBind);
+                  } else if (trigger) {
+                    element.on(trigger, showTooltipBind);
+                    element.on(triggers.hide[idx], hideTooltipBind);
+                  }
+
+                  element.on('keypress', function(e) {
+                    if (e.which === 27) {
+                      hideTooltipBind();
+                    }
+                  });
+                });
+              }
+            }
+
+            prepTriggers();
+
+            var animation = scope.$eval(attrs[prefix + 'Animation']);
+            ttScope.animation = angular.isDefined(animation) ? !!animation : options.animation;
+
+            var appendToBodyVal;
+            var appendKey = prefix + 'AppendToBody';
+            if (appendKey in attrs && attrs[appendKey] === undefined) {
+              appendToBodyVal = true;
+            } else {
+              appendToBodyVal = scope.$eval(attrs[appendKey]);
+            }
+
+            appendToBody = angular.isDefined(appendToBodyVal) ? appendToBodyVal : appendToBody;
+
+            // Make sure tooltip is destroyed and removed.
+            scope.$on('$destroy', function onDestroyTooltip() {
+              unregisterTriggers();
+              removeTooltip();
+              ttScope = null;
+            });
+          };
+        }
+      };
+    };
+  }];
+})
+
+// This is mostly ngInclude code but with a custom scope
+.directive('uibTooltipTemplateTransclude', [
+         '$animate', '$sce', '$compile', '$templateRequest',
+function ($animate, $sce, $compile, $templateRequest) {
+  return {
+    link: function(scope, elem, attrs) {
+      var origScope = scope.$eval(attrs.tooltipTemplateTranscludeScope);
+
+      var changeCounter = 0,
+        currentScope,
+        previousElement,
+        currentElement;
+
+      var cleanupLastIncludeContent = function() {
+        if (previousElement) {
+          previousElement.remove();
+          previousElement = null;
+        }
+
+        if (currentScope) {
+          currentScope.$destroy();
+          currentScope = null;
+        }
+
+        if (currentElement) {
+          $animate.leave(currentElement).then(function() {
+            previousElement = null;
+          });
+          previousElement = currentElement;
+          currentElement = null;
+        }
+      };
+
+      scope.$watch($sce.parseAsResourceUrl(attrs.uibTooltipTemplateTransclude), function(src) {
+        var thisChangeId = ++changeCounter;
+
+        if (src) {
+          //set the 2nd param to true to ignore the template request error so that the inner
+          //contents and scope can be cleaned up.
+          $templateRequest(src, true).then(function(response) {
+            if (thisChangeId !== changeCounter) { return; }
+            var newScope = origScope.$new();
+            var template = response;
+
+            var clone = $compile(template)(newScope, function(clone) {
+              cleanupLastIncludeContent();
+              $animate.enter(clone, elem);
+            });
+
+            currentScope = newScope;
+            currentElement = clone;
+
+            currentScope.$emit('$includeContentLoaded', src);
+          }, function() {
+            if (thisChangeId === changeCounter) {
+              cleanupLastIncludeContent();
+              scope.$emit('$includeContentError', src);
+            }
+          });
+          scope.$emit('$includeContentRequested', src);
+        } else {
+          cleanupLastIncludeContent();
+        }
+      });
+
+      scope.$on('$destroy', cleanupLastIncludeContent);
+    }
+  };
+}])
+
+/**
+ * Note that it's intentional that these classes are *not* applied through $animate.
+ * They must not be animated as they're expected to be present on the tooltip on
+ * initialization.
+ */
+.directive('uibTooltipClasses', ['$uibPosition', function($uibPosition) {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      // need to set the primary position so the
+      // arrow has space during position measure.
+      // tooltip.positionTooltip()
+      if (scope.placement) {
+        // // There are no top-left etc... classes
+        // // in TWBS, so we need the primary position.
+        var position = $uibPosition.parsePlacement(scope.placement);
+        element.addClass(attrs.placementPrefix + '-' + position[0]);
+      }
+
+      if (scope.popupClass) {
+        element.addClass(scope.popupClass);
+      }
+
+      if (scope.animation) {
+        element.addClass(attrs.tooltipAnimationClass);
+      }
+    }
+  };
+}])
+
+.directive('uibTooltipPopup', function() {
+  return {
+    restrict: 'A',
+    scope: { content: '@' },
+    templateUrl: 'uib/template/tooltip/tooltip-popup.html'
+  };
+})
+
+.directive('uibTooltip', [ '$uibTooltip', function($uibTooltip) {
+  return $uibTooltip('uibTooltip', 'tooltip', 'mouseenter');
+}])
+
+.directive('uibTooltipTemplatePopup', function() {
+  return {
+    restrict: 'A',
+    scope: { contentExp: '&', originScope: '&' },
+    templateUrl: 'uib/template/tooltip/tooltip-template-popup.html'
+  };
+})
+
+.directive('uibTooltipTemplate', ['$uibTooltip', function($uibTooltip) {
+  return $uibTooltip('uibTooltipTemplate', 'tooltip', 'mouseenter', {
+    useContentExp: true
+  });
+}])
+
+.directive('uibTooltipHtmlPopup', function() {
+  return {
+    restrict: 'A',
+    scope: { contentExp: '&' },
+    templateUrl: 'uib/template/tooltip/tooltip-html-popup.html'
+  };
+})
+
+.directive('uibTooltipHtml', ['$uibTooltip', function($uibTooltip) {
+  return $uibTooltip('uibTooltipHtml', 'tooltip', 'mouseenter', {
+    useContentExp: true
+  });
+}]);
+
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports) {
 
 angular.module("uib/template/modal/window.html", []).run(["$templateCache", function($templateCache) {
@@ -1783,20 +2622,128 @@ angular.module("uib/template/modal/window.html", []).run(["$templateCache", func
 
 
 /***/ }),
-/* 18 */,
-/* 19 */
+/* 24 */
+/***/ (function(module, exports) {
+
+angular.module("uib/template/popover/popover-html.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("uib/template/popover/popover-html.html",
+    "<div class=\"popover-inner\">\n" +
+    "    <h3 class=\"popover-title\" ng-bind=\"uibTitle\" ng-if=\"uibTitle\"></h3>\n" +
+    "    <div class=\"popover-content\" ng-bind-html=\"contentExp()\"></div>\n" +
+    "</div>\n" +
+    "");
+}]);
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+angular.module("uib/template/popover/popover-template.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("uib/template/popover/popover-template.html",
+    "<div class=\"popover-inner\">\n" +
+    "    <h3 class=\"popover-title\" ng-bind=\"uibTitle\" ng-if=\"uibTitle\"></h3>\n" +
+    "    <div class=\"popover-content\"\n" +
+    "      uib-tooltip-template-transclude=\"contentExp()\"\n" +
+    "      tooltip-template-transclude-scope=\"originScope()\"></div>\n" +
+    "</div>\n" +
+    "");
+}]);
+
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+angular.module("uib/template/popover/popover.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("uib/template/popover/popover.html",
+    "<div class=\"popover-inner\">\n" +
+    "    <h3 class=\"popover-title\" ng-bind=\"uibTitle\" ng-if=\"uibTitle\"></h3>\n" +
+    "    <div class=\"popover-content\" ng-bind=\"content\"></div>\n" +
+    "</div>\n" +
+    "");
+}]);
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+angular.module("uib/template/tooltip/tooltip-html-popup.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("uib/template/tooltip/tooltip-html-popup.html",
+    "<div class=\"tooltip-inner\" ng-bind-html=\"contentExp()\"></div>\n" +
+    "");
+}]);
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+angular.module("uib/template/tooltip/tooltip-popup.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("uib/template/tooltip/tooltip-popup.html",
+    "<div class=\"tooltip-inner\" ng-bind=\"content\"></div>\n" +
+    "");
+}]);
+
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports) {
+
+angular.module("uib/template/tooltip/tooltip-template-popup.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("uib/template/tooltip/tooltip-template-popup.html",
+    "<div class=\"tooltip-inner\"\n" +
+    "  uib-tooltip-template-transclude=\"contentExp()\"\n" +
+    "  tooltip-template-transclude-scope=\"originScope()\"></div>\n" +
+    "");
+}]);
+
+
+/***/ }),
+/* 30 */,
+/* 31 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 20 */
+/* 32 */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>{{ $ctrl.selectedMonth.monthName + ', ' + $ctrl.selectedMonth.year }}\r\n  <div class=\"pull-right\">\r\n    <button class=\"btn btn-sm btn-default\" ng-click=\"$ctrl.prevMonth()\">\r\n      <i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i>\r\n    </button>\r\n    <button class=\"btn btn-sm btn-default\" ng-click=\"$ctrl.setToday()\">Today</button>\r\n    <button class=\"btn btn-sm btn-default\" ng-click=\"$ctrl.nextMonth()\">\r\n      <i class=\"fa fa-arrow-right\" aria-hidden=\"true\"></i>\r\n    </button>\r\n  </div>\r\n</h1>\r\n<div class=\"col-md-12\">\r\n  <div class=\"row\">\r\n    <div class=\"day header\" ng-repeat=\"d in $ctrl.conf.days\" ng-bind=\"d\"></div>\r\n  </div>\r\n  <div class=\"row\">\r\n    <div class=\"day\" ng-class=\"{'today':$ctrl.isToday(day),'disabled':$ctrl.isDisabled(day)}\" ng-repeat=\"day in $ctrl.days\">\r\n      <header>{{day.getDate()}}</header>\r\n      <ul>\r\n        <li ng-repeat=\"event in eventsList=$ctrl.getEvents(day)\">\r\n          <header>{{event.title}}</header>\r\n          <p>{{event.description}}</p>\r\n          <footer>{{event.date | date:'hh:mm'}}</footer>\r\n        </li>\r\n      </ul>\r\n      <footer ng-if=\"eventsList.length>1\" ng-click=\"$ctrl.showAllEvents(day)\">+{{eventsList.length-1}}</footer>\r\n    </div>\r\n  </div>\r\n</div>\r\n<script type=\"text/ng-template\" id=\"myModalContent.html\">\r\n  <div class=\"modal-header\">\r\n    <h3 class=\"modal-title\" id=\"modal-title\">I'm a modal!</h3>\r\n  </div>\r\n  <div class=\"modal-body\" id=\"modal-body\">\r\n    <ul>\r\n      <li ng-repeat=\"event in $ctrl.events\">\r\n        <header>{{event.title}}</header>\r\n        <p>{{event.description}}</p>\r\n        <footer>{{event.date | date:'hh:mm'}}</footer>\r\n      </li>\r\n    </ul>\r\n  </div>\r\n  <div class=\"modal-footer\">\r\n    <button class=\"btn btn-primary\" type=\"button\" ng-click=\"$ctrl.ok()\">OK</button>\r\n    <button class=\"btn btn-warning\" ng-hide=\"true\" type=\"button\" ng-click=\"$ctrl.cancel()\">Cancel</button>\r\n  </div>\r\n</script>\r\n";
+// removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 21 */
+/* 33 */
+/***/ (function(module, exports) {
+
+module.exports = "<h1>{{ $ctrl.selectedMonth.monthName + ', ' + $ctrl.selectedMonth.year }}\r\n  <button popover-placement=\"bottom-left\" uib-popover-template=\"$ctrl.dynamicPopover.templateUrl\" \r\n    type=\"button\" class=\"btn btn-default btn-sm\">\r\n    <i class=\"fa fa-plus-circle\"></i> New Event</button>\r\n  <div class=\"pull-right\">\r\n    <button class=\"btn btn-sm btn-default\" ng-click=\"$ctrl.prevMonth()\">\r\n      <i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i>\r\n    </button>\r\n    <button class=\"btn btn-sm btn-default\" ng-click=\"$ctrl.setToday()\">Today</button>\r\n    <button class=\"btn btn-sm btn-default\" ng-click=\"$ctrl.nextMonth()\">\r\n      <i class=\"fa fa-arrow-right\" aria-hidden=\"true\"></i>\r\n    </button>\r\n  </div>\r\n</h1>\r\n<div class=\"col-md-12\">\r\n  <div class=\"row\">\r\n    <div class=\"day header\" ng-repeat=\"d in $ctrl.conf.days\" ng-bind=\"d\"></div>\r\n  </div>\r\n  <div class=\"row\">\r\n    <div class=\"day\" ng-class=\"{'today':$ctrl.isToday(day),'disabled':$ctrl.isDisabled(day)}\" ng-repeat=\"day in $ctrl.days\">\r\n      <header>{{day.getDate()}}</header>\r\n      <div class=\"events-list\">\r\n        <event event-info=\"event\" ng-repeat=\"event in eventsList=$ctrl.getEvents(day)\"></event>\r\n      </div>\r\n      <footer ng-if=\"eventsList.length>1\" ng-click=\"$ctrl.showAllEvents(day)\">+{{eventsList.length-1}}</footer>\r\n    </div>\r\n  </div>\r\n</div>\r\n<script type=\"text/ng-template\" id=\"myModalContent.html\">\r\n  <div class=\"modal-header\">\r\n    <h3 class=\"modal-title\" id=\"modal-title\">{{$ctrl.day | date: 'MMMM dd, yyyy'}}</h3>\r\n  </div>\r\n  <div class=\"modal-body\" id=\"modal-body\">\r\n    <div class=\"events-list\">\r\n      <event event-info=\"event\" ng-repeat=\"event in $ctrl.events\">\r\n      </event>\r\n    </div>\r\n  </div>\r\n  <div class=\"modal-footer\">\r\n    <button class=\"btn btn-primary\" type=\"button\" ng-click=\"$ctrl.ok()\">OK</button>\r\n    <button class=\"btn btn-warning\" ng-hide=\"true\" type=\"button\" ng-click=\"$ctrl.cancel()\">Cancel</button>\r\n  </div>\r\n</script>\r\n<script type=\"text/ng-template\" id=\"myPopoverTemplate.html\">\r\n  <div class=\"popover\" role=\"tooltip\">\r\n    <div class=\"arrow\"></div>\r\n    <h3 class=\"popover-header\">Add Event</h3>\r\n    <div class=\"popover-body\">\r\n      <div class=\"form-group\">\r\n        <label>Title:</label>\r\n        <input type=\"text\" ng-model=\"$ctrl.event.title\" class=\"form-control form-control-sm\" />\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label>Description:</label>\r\n        <textarea rows=\"\" cols=\"\" ng-model=\"$ctrl.event.description\" class=\"form-control form-control-sm\"></textarea>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label>Date:</label>\r\n        <input type=\"date\" ng-model=\"$ctrl.event.date\" class=\"form-control form-control-sm\" />\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label>Time:</label>\r\n        <input type=\"time\" ng-model=\"$ctrl.event.date\" class=\"form-control form-control-sm\" />\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <button class=\"btn btn-primary btn-sm\" ng-click=\"$ctrl.addEvent($ctrl.event)\">Save</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</script>\r\n";
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports) {
+
+module.exports = "  <header>\n    {{$ctrl.eventInfo.title}}</header>\n  <p>{{$ctrl.eventInfo.description}}</p>\n  <footer>{{$ctrl.eventInfo.date | date:'hh:mm'}}</footer>\n";
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+function eventController() {
+
+}
+
+module.exports = {
+  template: __webpack_require__(34),
+  controller: eventController,
+  bindings: {
+    eventInfo: '='
+  }
+};
+
+
+/***/ }),
+/* 36 */
 /***/ (function(module, exports) {
 
 function LocalStorage($window) {
@@ -1827,23 +2774,24 @@ module.exports = LocalStorage;
 
 
 /***/ }),
-/* 22 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var angular = __webpack_require__(0);
 
-var calendar = __webpack_require__(5);
+var calendar = __webpack_require__(8);
 __webpack_require__(1);
-var modal = __webpack_require__(3);
-var routesConfig = __webpack_require__(7);
+var modal = __webpack_require__(5);
+var popover = __webpack_require__(6);
+var routesConfig = __webpack_require__(11);
 
-__webpack_require__(4);
+__webpack_require__(7);
 
 var app = 'app';
 module.exports = app;
 
 angular
-  .module(app, ['ui.router', modal])
+  .module(app, ['ui.router', modal, popover])
   .config(routesConfig)
   .component('app', calendar)
   .run(["LocalStorageService", function (LocalStorageService) {
@@ -1865,9 +2813,10 @@ angular
       date: new Date().setDate(32)
     }]);
   }])
-  .controller('ModalInstanceController', ["$uibModalInstance", "events", function ($uibModalInstance, events) {
+  .controller('ModalInstanceController', ["$uibModalInstance", "day", "events", function ($uibModalInstance, day, events) {
     var vm = this;
     vm.events = events;
+    vm.day = day;
 
     vm.ok = function () {
       $uibModalInstance.close('closed');
@@ -1887,8 +2836,7 @@ angular
     controller: function () {
       var vm = this;
 
-      vm.$onInit = function () {
-      };
+      vm.$onInit = function () {};
 
       vm.ok = function () {
         vm.close({
@@ -1904,8 +2852,9 @@ angular
     }
   });
 
-__webpack_require__(6);
+__webpack_require__(10);
+__webpack_require__(9);
 
 
 /***/ })
-],[22]);
+],[37]);

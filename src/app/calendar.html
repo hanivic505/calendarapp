@@ -1,4 +1,4 @@
-<h1>{{ $ctrl.selectedMonth.day+ ' ' + $ctrl.selectedMonth.monthName + ', ' + $ctrl.selectedMonth.year }}
+<h1>{{ $ctrl.selectedMonth.monthName + ', ' + $ctrl.selectedMonth.year }}
   <div class="pull-right">
     <button class="btn btn-sm btn-default" ng-click="$ctrl.prevMonth()">
       <i class="fa fa-arrow-left" aria-hidden="true"></i>
@@ -11,21 +11,37 @@
 </h1>
 <div class="col-md-12">
   <div class="row">
-    <div class="day header">Sunday</div>
-    <div class="day header">Monday</div>
-    <div class="day header">Tuesday</div>
-    <div class="day header">Wednesday</div>
-    <div class="day header">Thursday</div>
-    <div class="day header">Friday</div>
-    <div class="day header">Saturday</div>
+    <div class="day header" ng-repeat="d in $ctrl.conf.days" ng-bind="d"></div>
   </div>
   <div class="row">
-    <div class="day" ng-class="{'today':$ctrl.isToday(day),'disabled':$ctrl.isDisabled(day)}" ng-repeat="day in $ctrl.days"><span>{{day.getDate()}}</span>
-    <ul>
-      <li>New event</li>
-      <li>New event</li>
-      <li>New event</li>
-    </ul>
+    <div class="day" ng-class="{'today':$ctrl.isToday(day),'disabled':$ctrl.isDisabled(day)}" ng-repeat="day in $ctrl.days">
+      <header>{{day.getDate()}}</header>
+      <ul>
+        <li ng-repeat="event in eventsList=$ctrl.getEvents(day)">
+          <header>{{event.title}}</header>
+          <p>{{event.description}}</p>
+          <footer>{{event.date | date:'hh:mm'}}</footer>
+        </li>
+      </ul>
+      <footer ng-if="eventsList.length>1" ng-click="$ctrl.showAllEvents(day)">+{{eventsList.length-1}}</footer>
     </div>
   </div>
 </div>
+<script type="text/ng-template" id="myModalContent.html">
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
+  </div>
+  <div class="modal-body" id="modal-body">
+    <ul>
+      <li ng-repeat="event in $ctrl.events">
+        <header>{{event.title}}</header>
+        <p>{{event.description}}</p>
+        <footer>{{event.date | date:'hh:mm'}}</footer>
+      </li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+    <button class="btn btn-warning" ng-hide="true" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+  </div>
+</script>
